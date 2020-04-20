@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Plane overview</title>
+</head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="landing-page.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"></script>
+<h1>Plane overview</h1>
+<table id="table" class="w3-table-all">
+    <tr><th>ID</th>
+    <th>Name</th>
+    <th>Current location</th>
+    <th>Amount of fuel</th>
+</tr>
+</table>
+
+<a href="addPlane.html" class="btn btn-primary">Add a new plane</a>
+
+<script>
+function refuel(id) {
+    var url = "planes/plane/" + id + "/refuel";
+    $.get(url, function(result){
+                    alert(result);
+                    location.reload(true);
+});
+}
+
+function fly(id) {
+    var url = "planes/plane/" + id;
+    $.get(url, function(data, status){
+    $.ajax({
+                url: url + "/fly",
+                type:"POST",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function(result){
+                    alert(result);
+                    location.reload(true);
+                  },
+                  error: function(){
+                    alert('Something has gone wrong. Please contact your local administrator.');
+                   }
+                });
+});
+}
+
+function deletePlane(id) {
+    var url = "planes/plane/" + id;
+    $.ajax({
+    url: url,
+    type: 'DELETE',
+    success: function() {
+        alert("The plane has been successfully deleted");
+        location.reload(true);
+    }
+});
+}
+
+</script>
+
+</body>
+</html>
